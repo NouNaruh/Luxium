@@ -1,6 +1,6 @@
 {
-  "item.luxium.scepter1": "Скипитр ученика",
-  "item.luxium.scepter2": "Скипитр яркого сияния",
-  "item.luxium.scepter3": "Скипитр багровой луны",
-  "item.luxium.scepter4": "Скипитр апостала Равновесия"
+  "item.luxium.scepter_student": "Скипитр ученика",
+  "item.luxium.scepter_bright_lux": "Скипитр яркого сияния",
+  "item.luxium.scepter_crimson_moon": "Скипитр багровой луны",
+  "item.luxium.scepter_apostol_balance": "Скипитр апостала Равновесия"
 }

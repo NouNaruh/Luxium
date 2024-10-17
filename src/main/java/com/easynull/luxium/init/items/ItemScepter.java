@@ -31,14 +31,15 @@ public class ItemScepter extends Item implements IMagic {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag fl) {
         super.appendHoverText(stack, world, list, fl);
-        list.add(new TextComponent(EnergyType.LUX.name().toLowerCase() +" "+ getEnergy(stack, EnergyType.LUX) +"/"+ getMaxEnergy(stack, EnergyType.LUX)));
-        if(getMaxEnergy(stack, EnergyType.TENEBRIS) > 0){
-            list.add(new TextComponent(EnergyType.TENEBRIS.name().toLowerCase() +" "+ getEnergy(stack, EnergyType.TENEBRIS) +"/"+ getMaxEnergy(stack, EnergyType.TENEBRIS)).withStyle(ChatFormatting.DARK_GRAY));
+        CompoundTag tag = stack.getOrCreateTag();
+        list.add(new TextComponent(EnergyType.LUX.name().toLowerCase() +" "+ getEnergy(tag, EnergyType.LUX) +"/"+ getMaxEnergy(EnergyType.LUX)).withStyle(ChatFormatting.WHITE));
+        if(getMaxEnergy(EnergyType.TENEBRIS) > 0){
+            list.add(new TextComponent(EnergyType.TENEBRIS.name().toLowerCase() +" "+ getEnergy(tag, EnergyType.TENEBRIS) +"/"+ getMaxEnergy(EnergyType.TENEBRIS)).withStyle(ChatFormatting.BLACK));
         }
     }
 
     @Override
-    public double getMaxEnergy(ItemStack stack, EnergyType type) {
+    public double getMaxEnergy(EnergyType type) {
         return switch (type) {
             case LUX -> maxLight;
             case TENEBRIS -> maxDark;
@@ -46,9 +47,9 @@ public class ItemScepter extends Item implements IMagic {
     }
     public void setEnergy(ItemStack stack, EnergyType type, double amount) {
         CompoundTag tag = stack.getOrCreateTag();
-        tag.putDouble("Energy_" + type.name().toLowerCase(), getEnergy(stack, type) + amount);
-        if(getEnergy(stack, type) == getMaxEnergy(stack, type)){
-            tag.putDouble("Energy_" + type.name().toLowerCase(), getMaxEnergy(stack, type));
+        tag.putDouble("Energy_" + type.name().toLowerCase(), getEnergy(tag, type) + amount);
+        if(getEnergy(tag, type) >= getMaxEnergy(type)){
+            tag.putDouble("Energy_" + type.name().toLowerCase(), getMaxEnergy(type));
         }
     }
 
