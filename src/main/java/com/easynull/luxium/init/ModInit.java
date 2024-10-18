@@ -22,7 +22,7 @@ public class ModInit {
     public static RegistryObject<Block> energyRelay = BLOCKS.register("energy_relay", BlockEnergyRelay::new);
 
     public static DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, LuxiumMod.ID);
-    public static RegistryObject<BlockEntityType<TileClepsydraLight>> clepsydra = TILES.register("clepsydra", () -> BlockEntityType.Builder.of(TileClepsydraLight::new, clepsydraLuxium.get()).build(null));
+    public static RegistryObject<BlockEntityType<TileLuxiumCrystal>> clepsydra = TILES.register("clepsydra", () -> BlockEntityType.Builder.of(TileLuxiumCrystal::new, clepsydraLuxium.get()).build(null));
     public static RegistryObject<BlockEntityType<TileMembraniumTotem>> membraniumTotem = TILES.register("membranium_totem", () -> BlockEntityType.Builder.of(TileMembraniumTotem::new, luminaryMembraniumTotem.get(), umbralMembraniumTotem.get()).build(null));
     public static RegistryObject<BlockEntityType<TileEnergyRelay>> relay = TILES.register("relay", () -> BlockEntityType.Builder.of(TileEnergyRelay::new, energyRelay.get()).build(null));
 
@@ -32,6 +32,7 @@ public class ModInit {
     public static RegistryObject<Item> scepter2 = ITEMS.register("scepter_bright_lux",() -> new ItemScepter(150, 0));
     public static RegistryObject<Item> scepter3 = ITEMS.register("scepter_crimson_moon",() -> new ItemScepter(450, 300));
     public static RegistryObject<Item> scepter4 = ITEMS.register("scepter_apostol_balance",() -> new ItemScepter(1000, 1000));
+    public static RegistryObject<Item> st = ITEMS.register("st", Tester::new);
     public static RegistryObject<Item> clepsydraLuxiumI = ITEMS.register("clepsydra_luxium",() -> new BlockItem(clepsydraLuxium.get(),new Item.Properties().tab(ModCreativeTab.tab)));
     public static RegistryObject<Item> luminaryMembraniumTotemI = ITEMS.register("luminary_membranium_totem",() -> new BlockItem(luminaryMembraniumTotem.get(),new Item.Properties().tab(ModCreativeTab.tab)));
     public static RegistryObject<Item> umbralMembraniumTotemI = ITEMS.register("umbral_membranium_totem",() -> new BlockItem(umbralMembraniumTotem.get(),new Item.Properties().tab(ModCreativeTab.tab)));
