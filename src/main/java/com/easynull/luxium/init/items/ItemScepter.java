@@ -30,14 +30,13 @@ public class ItemScepter extends Item implements IMagic {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag fl) {
-        super.appendHoverText(stack, world, list, fl);
         CompoundTag tag = stack.getOrCreateTag();
         list.add(new TextComponent(EnergyType.LUX.name().toLowerCase() +" "+ getEnergy(tag, EnergyType.LUX) +"/"+ getMaxEnergy(EnergyType.LUX)).withStyle(ChatFormatting.WHITE));
         if(getMaxEnergy(EnergyType.TENEBRIS) > 0){
             list.add(new TextComponent(EnergyType.TENEBRIS.name().toLowerCase() +" "+ getEnergy(tag, EnergyType.TENEBRIS) +"/"+ getMaxEnergy(EnergyType.TENEBRIS)).withStyle(ChatFormatting.BLACK));
         }
+        super.appendHoverText(stack, world, list, fl);
     }
-
     @Override
     public double getMaxEnergy(EnergyType type) {
         return switch (type) {
@@ -45,19 +44,13 @@ public class ItemScepter extends Item implements IMagic {
             case TENEBRIS -> maxDark;
         };
     }
-    public void setEnergy(ItemStack stack, EnergyType type, double amount) {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.putDouble("Energy_" + type.name().toLowerCase(), getEnergy(tag, type) + amount);
-        if(getEnergy(tag, type) >= getMaxEnergy(type)){
-            tag.putDouble("Energy_" + type.name().toLowerCase(), getMaxEnergy(type));
-        }
-    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        setEnergy(stack, EnergyType.TENEBRIS, 8);
-        setEnergy(stack, EnergyType.LUX, 10);
+        CompoundTag tag = stack.getOrCreateTag();
+        setEnergy(tag, EnergyType.TENEBRIS, 8);
+        setEnergy(tag, EnergyType.LUX, 10);
         return super.use(world, player, hand);
     }
 }

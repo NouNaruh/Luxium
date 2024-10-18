@@ -1,5 +1,6 @@
 package com.easynull.luxium;
 
+import com.easynull.luxium.api.chronicles.Head;
 import com.easynull.luxium.init.ModInit;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,12 +21,17 @@ public class LuxiumMod {
 
         ModInit.register(eventBus);
         eventBus.addListener(this::setup);
+        eventBus.addListener(this::client);
         eventBus.addListener(this::enqueueIMC);
         eventBus.addListener(this::processIMC);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event){
+    }
+
+    private void client(final FMLClientSetupEvent event){
+        Head.init();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event){

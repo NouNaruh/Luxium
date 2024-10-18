@@ -17,7 +17,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-version = '1.18.2-0.0.1'
+version = '1.18.2-0.0.1b'
 group = 'com.easynull.luxium'
 archivesBaseName = 'luxium'
 
@@ -34,10 +34,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'luxium'
 
             mods {
-                examplemod {
+                luxium {
                     source sourceSets.main
                 }
             }
@@ -50,10 +50,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'luxium'
 
             mods {
-                examplemod {
+                luxium {
                     source sourceSets.main
                 }
             }
@@ -65,10 +65,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'luxium'
 
             mods {
-                examplemod {
+                luxium {
                     source sourceSets.main
                 }
             }
@@ -81,10 +81,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'luxium', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                examplemod {
+                luxium {
                     source sourceSets.main
                 }
             }
@@ -104,7 +104,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "examplemod",
+                "Specification-Title"     : "luxium",
                 "Specification-Vendor"    : "examplemodsareus",
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,

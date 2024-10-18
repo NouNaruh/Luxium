@@ -1,7 +1,7 @@
 package com.easynull.luxium.init.blocks;
 
 import com.easynull.luxium.init.ModInit;
-import com.easynull.luxium.init.tiles.TileClepsydraLight;
+import com.easynull.luxium.init.tiles.TileEnergyRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -13,20 +13,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 
-public class BlockClepsydraLight extends BaseEntityBlock {
-    public BlockClepsydraLight() {
+public class BlockEnergyRelay extends BaseEntityBlock {
+    public BlockEnergyRelay() {
         super(BlockBehaviour.Properties.of(Material.GLASS));
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TileClepsydraLight(pos, state);
+        return new TileEnergyRelay(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModInit.clepsydra.get(), TileClepsydraLight::tick);
+        return createTickerHelper(type, ModInit.relay.get(), TileEnergyRelay::tick);
     }
 }
