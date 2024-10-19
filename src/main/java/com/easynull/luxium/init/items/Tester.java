@@ -1,5 +1,6 @@
 package com.easynull.luxium.init.items;
 
+import com.easynull.luxium.init.tiles.TileEnergyRelay;
 import com.easynull.luxium.init.tiles.TileLuxiumCrystal;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class Tester extends Item {
     public Tester() {
@@ -20,8 +22,12 @@ public class Tester extends Item {
         Player pl = pContext.getPlayer();
         BlockPos pos = pContext.getClickedPos();
         Level world = pContext.getLevel();
-        TileLuxiumCrystal crystal = (TileLuxiumCrystal)world.getBlockEntity(pos);
-        pl.sendMessage(new TextComponent(crystal.getLux() + ""), Util.NIL_UUID);
+        BlockEntity l = world.getBlockEntity(pos);
+        if(l instanceof TileLuxiumCrystal crystal) {
+            pl.sendMessage(new TextComponent(crystal.getLux() + ""), Util.NIL_UUID);
+        }else if(l instanceof TileEnergyRelay r) {
+            pl.sendMessage(new TextComponent(r.getEnergy(r) + ""), Util.NIL_UUID);
+        }
         return super.useOn(pContext);
     }
 }

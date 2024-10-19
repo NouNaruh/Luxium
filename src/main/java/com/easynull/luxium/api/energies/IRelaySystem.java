@@ -1,15 +1,32 @@
 package com.easynull.luxium.api.energies;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public interface IRelaySystem {
-    ArrayList<WeakReference<IRelaySystem>> children = new ArrayList<>();
-    WeakReference<IRelaySystem> parent = null;
-    default WeakReference<IRelaySystem> getParent(){
-        return parent;
+    double getMaxEnergy();
+
+    boolean canConnectTransferEnergy();
+    boolean canConnectReceiveEnergy();
+
+    void setEnergy(int energy);
+    default CompoundTag getOrCreateEnergyTag(BlockEntity tile) {
+        return tile.getTileData();
     }
-    default ArrayList<WeakReference<IRelaySystem>> getChildren(){
-        return children;
+
+    default double getSpace(BlockEntity tile) {
+        return this.getMaxEnergy() - this.getEnergy(tile);
+    }
+
+    default double getEnergy(BlockEntity tile) {
+        CompoundTag tag = this.getOrCreateEnergyTag(tile);
+        return tag.getDouble("Energy_" + EnergyType.values().toString().toLowerCase());
+    }
+
+    default void setEnergy(BlockEntity tile, double energy) {
+        CompoundTag tag = this.getOrCreateEnergyTag(tile);
+        double stored = Math.min(this.getEnergy(tile), getMaxEnergy());
+        stored += energy;
+        tag.putDouble("Energy_" + EnergyType.values().toString().toLowerCase(), stored);
     }
 }

@@ -44,7 +44,7 @@ public class ItemChronicles extends Item {
         return toms.toString();
     }
     public void setTom(String name) {
-        toms.add(name);
+        toms.contains(name);
     }
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag fl) {

@@ -1,9 +1,12 @@
 package com.easynull.luxium.init.tiles;
 
+import com.easynull.luxium.api.energies.EnergyType;
 import com.easynull.luxium.api.energies.IRelaySystem;
 import com.easynull.luxium.init.ModInit;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -12,59 +15,83 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class TileEnergyRelay extends BlockEntity implements IRelaySystem {
+    public double energy;
+    public int fromX,fromY,fromZ;
+    public int toX,toY,toZ;
+    public boolean work = false;
     public TileEnergyRelay(BlockPos pos, BlockState state) {
         super(ModInit.relay.get(), pos, state);
     }
 
-    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, TileEnergyRelay tile) {
-        if(tile.isConnect()){
-            tile.rays(pLevel);
-            pLevel.playSound(pLevel.getNearestPlayer(pPos.getX(), pPos.getY(), pPos.getZ(), 10, true), pPos, SoundEvents.ZOGLIN_ANGRY, SoundSource.AMBIENT, 1.0F, 1.0F);
-        }
-    }
-    public boolean isConnect(){
-        for(int disX = -10; disX <= 10; disX++){
-            for(int disY = -10; disY <= 10; disY++) {
-                for (int disZ = -10; disZ <= 10; disZ++) {
-                    BlockEntity entity = level.getBlockEntity(getBlockPos().offset(disX, disY, disZ));
-                    if (entity instanceof TileLuxiumCrystal con) {
-                       if(con.getLux() > 0){
-                           return true;
-                       }
-                    }
+    public static void tick(Level level, BlockPos pos, BlockState state, TileEnergyRelay tile) {
+        if (!level.isClientSide) {
+            for (int x = -5; x <= 5; x++) {
+                BlockPos pos1 = pos.offset(x, x, x);
+                BlockEntity entity = level.getBlockEntity(pos1);
+                if(entity instanceof IRelaySystem system){
+                    tile.addRayEnergy(pos, pos1);
+                    system.setEnergy((BlockEntity) system, 0.0002);
+                    tile.work = true;
                 }
             }
         }
+    }
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        energy = tag.getDouble("Energy_" + EnergyType.values().toString().toLowerCase());
+        fromX = tag.getInt("fromX");
+        fromY = tag.getInt("fromY");
+        fromZ = tag.getInt("fromZ");
+        toX = tag.getInt("toX");
+        toY = tag.getInt("toY");
+        toZ = tag.getInt("toZ");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putDouble("Energy_" + EnergyType.values().toString().toLowerCase(), energy);
+        tag.putInt("fromX", fromX);
+        tag.putInt("fromY", fromY);
+        tag.putInt("fromZ", fromZ);
+        tag.putInt("toX", toX);
+        tag.putInt("toY", toY);
+        tag.putInt("toZ", toZ);
+    }
+
+    @Override
+    public double getEnergy(BlockEntity e) {
+        return energy;
+    }
+
+    @Override
+    public double getMaxEnergy() {
+        return 1;
+    }
+
+    @Override
+    public boolean canConnectTransferEnergy() {
         return false;
     }
-    public void rays(Level level) {
-        for (int disX = -10; disX <= 10; disX++) {
-            for (int disY = -10; disY <= 10; disY++) {
-                for (int disZ = -10; disZ <= 10; disZ++) {
-                    BlockEntity entity = level.getBlockEntity(getBlockPos().offset(disX, disY, disZ));
-                    if (entity instanceof TileEnergyRelay relay) {
-                        BlockPos posRelay = relay.getBlockPos();
-                        BlockPos pos = getBlockPos();
 
-                        Vec3 directionVector = Vec3.atLowerCornerOf(posRelay).subtract(Vec3.atLowerCornerOf(pos)).normalize();
-                        Vec3 startPos = Vec3.atLowerCornerOf(pos).add(new Vec3(0.5, 0.5, 0.5));
-                        double randomX = (level.random.nextDouble() - 0.5) * 0.2;
-                        double randomY = (level.random.nextDouble() - 0.5) * 0.2;
-                        double randomZ = (level.random.nextDouble() - 0.5) * 0.2;
-                        level.addParticle(ParticleTypes.ELECTRIC_SPARK, startPos.x + randomX, startPos.y + randomY, startPos.z + randomZ, directionVector.x, directionVector.y, directionVector.z);
-                    }else if(entity instanceof TileMembraniumTotem relay) {
-                        BlockPos posRelay = relay.getBlockPos();
-                        BlockPos pos = getBlockPos();
+    @Override
+    public boolean canConnectReceiveEnergy() {
+        return false;
+    }
 
-                        Vec3 directionVector = Vec3.atLowerCornerOf(posRelay).subtract(Vec3.atLowerCornerOf(pos)).normalize();
-                        Vec3 startPos = Vec3.atLowerCornerOf(pos).add(new Vec3(0.5, 0.5, 0.5));
-                        double randomX = (level.random.nextDouble() - 0.5) * 0.2;
-                        double randomY = (level.random.nextDouble() - 0.5) * 0.2;
-                        double randomZ = (level.random.nextDouble() - 0.5) * 0.2;
-                        level.addParticle(ParticleTypes.ELECTRIC_SPARK, startPos.x + randomX, startPos.y + randomY, startPos.z + randomZ, directionVector.x, directionVector.y, directionVector.z);
-                    }
-                }
-            }
-        }
+    @Override
+    public void setEnergy(int energy) {
+
+    }
+    public void addRayEnergy(BlockPos pFrom, BlockPos pTo){
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("fromX", pFrom.getX());
+        tag.putInt("fromY", pFrom.getY());
+        tag.putInt("fromZ", pFrom.getZ());
+
+        tag.putInt("toX", pTo.getX());
+        tag.putInt("toY", pTo.getY());
+        tag.putInt("toZ", pTo.getZ());
     }
 }
