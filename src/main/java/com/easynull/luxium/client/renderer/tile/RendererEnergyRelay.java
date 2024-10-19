@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 
 public class RendererEnergyRelay implements BlockEntityRenderer<TileEnergyRelay> {
+    public RendererEnergyRelay(){}
+
     @Override
     public void render(TileEnergyRelay tile, float v, PoseStack poseStack, MultiBufferSource source, int i, int i1) {
         if(tile.work) {
