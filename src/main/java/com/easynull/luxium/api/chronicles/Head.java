@@ -1,7 +1,5 @@
 package com.easynull.luxium.api.chronicles;
 
-import com.easynull.luxium.api.chronicles.pages.PageText;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +9,5 @@ public class Head {
     public static Page PISA;
     public static Chapters JOPA;
 
-    public static void init(){
-        PISA = new PageText();
-    }
+    public static void init(){}
 }

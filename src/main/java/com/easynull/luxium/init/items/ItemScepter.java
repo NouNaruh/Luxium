@@ -53,13 +53,8 @@ public class ItemScepter extends Item implements IMagic {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         CompoundTag tag = stack.getOrCreateTag();
-        setEnergy(tag, EnergyType.TENEBRIS, 8);
-        setEnergy(tag, EnergyType.LUX, 10);
+        setEnergy(tag, EnergyType.TENEBRIS, 8.56);
+        setEnergy(tag, EnergyType.LUX, 10.99);
         return super.use(world, player, hand);
-    }
-
-    @Override
-    public Optional<TooltipComponent> getTooltipImage(ItemStack pStack) {
-        return super.getTooltipImage(pStack);
     }
 }

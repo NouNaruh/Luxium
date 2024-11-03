@@ -1,11 +1,17 @@
 {
   "itemGroup.tab": "Luxium",
+
   "item.luxium.chronicles": "Хроники \"От Солнца до Луны\"",
   "item.luxium.scepter_student": "Скипитр ученика",
   "item.luxium.scepter_bright_lux": "Скипитр яркого сияния",
   "item.luxium.scepter_crimson_moon": "Скипитр багровой луны",
   "item.luxium.scepter_apostol_balance": "Скипитр Апостала Равновесия",
+
+  "block.luxium.luxium_crystal": "Кристалл света",
+  "block.luxium.filling_prism": "Призма Наполнения",
+
   "tootip.luxium.energy.lux": "▶ %s энергии Света",
   "tootip.luxium.energy.tenebris": "▶ %s энергии Тьмы",
-  "block.luxium.luxium_crystal": "Кристалл света"
+
+  "entity.luxium.spice_merchant": "Торговец пряностей"
 }

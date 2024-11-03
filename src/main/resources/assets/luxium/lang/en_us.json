@@ -1,11 +1,17 @@
 {
   "itemGroup.tab": "Luxium",
+
   "item.luxium.chronicles": "Chronicles \"Sun to Moon\"",
   "item.luxium.scepter_student": "Scepter student",
   "item.luxium.scepter_bright_lux": "Scepter bright luxi",
   "item.luxium.scepter_crimson_moon": "Scepter crimson moon",
   "item.luxium.scepter_apostol_balance": "Scepter Apostol of Balance",
+
+  "block.luxium.luxium_crystal": "Luxium crystal",
+  "block.luxium.filling_prism": "Filling prism",
+
   "tootip.luxium.energy.lux": "▶ %s energy Lux",
   "tootip.luxium.energy.tenebris": "▶ %s energy Tenebris",
-  "block.luxium.luxium_crystal": "Luxium crystal"
+
+  "entity.luxium.spice_merchant": "Spice merchant"
 }
