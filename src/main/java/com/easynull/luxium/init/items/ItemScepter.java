@@ -7,9 +7,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,6 +19,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ItemScepter extends Item implements IMagic {
     final double maxLight;
@@ -31,9 +34,10 @@ public class ItemScepter extends Item implements IMagic {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag fl) {
         CompoundTag tag = stack.getOrCreateTag();
-        list.add(new TextComponent(EnergyType.LUX.name().toLowerCase() +" "+ getEnergy(tag, EnergyType.LUX) +"/"+ getMaxEnergy(EnergyType.LUX)).withStyle(ChatFormatting.WHITE));
         if(getMaxEnergy(EnergyType.TENEBRIS) > 0){
-            list.add(new TextComponent(EnergyType.TENEBRIS.name().toLowerCase() +" "+ getEnergy(tag, EnergyType.TENEBRIS) +"/"+ getMaxEnergy(EnergyType.TENEBRIS)).withStyle(ChatFormatting.BLACK));
+            list.add(new TranslatableComponent("tootip.luxium.energy.lux", getEnergy(tag, EnergyType.LUX)).withStyle(ChatFormatting.WHITE).append((new TranslatableComponent(" " + "tootip.luxium.energy.tenebris", getEnergy(tag, EnergyType.TENEBRIS)).withStyle(ChatFormatting.DARK_GRAY))));
+        }else{
+            list.add(new TranslatableComponent("tootip.luxium.energy.lux",getEnergy(tag, EnergyType.LUX)).withStyle(ChatFormatting.WHITE));
         }
         super.appendHoverText(stack, world, list, fl);
     }
@@ -52,5 +56,10 @@ public class ItemScepter extends Item implements IMagic {
         setEnergy(tag, EnergyType.TENEBRIS, 8);
         setEnergy(tag, EnergyType.LUX, 10);
         return super.use(world, player, hand);
+    }
+
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack pStack) {
+        return super.getTooltipImage(pStack);
     }
 }

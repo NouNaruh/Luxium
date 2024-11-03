@@ -2,11 +2,12 @@ package com.easynull.luxium.api.chronicles;
 
 import com.easynull.luxium.client.Utils;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,6 +25,12 @@ public class ScreenChronicles extends Screen {
     @Override
     public void render(PoseStack ps, int pMouseX, int pMouseY, float pPartialTick) {
         renderBackground(ps);
+        double ticksUp = (Minecraft.getInstance().level.getGameTime() + pPartialTick) * 4;
+        ticksUp = (ticksUp) % 360;
+        ps.pushPose();
+        Utils.renderItemGui(Items.ANVIL.getDefaultInstance(),0,0,10,10,10);
+        ps.mulPose(Vector3f.ZP.rotationDegrees((float) ticksUp));
+        ps.popPose();
         super.render(ps, pMouseX, pMouseY, pPartialTick);
     }
 

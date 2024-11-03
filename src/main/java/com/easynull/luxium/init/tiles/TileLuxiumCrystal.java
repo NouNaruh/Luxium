@@ -1,6 +1,5 @@
 package com.easynull.luxium.init.tiles;
 
-import com.easynull.luxium.api.energies.EnergySystem;
 import com.easynull.luxium.api.energies.EnergyType;
 import com.easynull.luxium.client.Utils;
 import com.easynull.luxium.init.ModInit;
