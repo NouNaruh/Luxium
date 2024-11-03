@@ -34,22 +34,7 @@ public class ItemChronicles extends Item {
         if (level.isClientSide) {
             Minecraft.getInstance().setScreen(new ScreenChronicles());
             level.playSound(pPlayer, pPlayer.getOnPos(), SoundEvents.BOOK_PUT, SoundSource.AMBIENT, 1.0F, 1.0F);
-            if(!getDefaultInstance().hasTag()) {
-                setTom("balance");
-            }
         }
         return super.use(level, pPlayer, hand);
     }
-    public String getTom() {
-        return toms.toString();
-    }
-    public void setTom(String name) {
-        toms.contains(name);
-    }
-    @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag fl) {
-        tooltip.add(new TextComponent(getTom()));
-        super.appendHoverText(pStack, pLevel, tooltip, fl);
-    }
-
 }

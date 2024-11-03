@@ -1,6 +1,5 @@
 package com.easynull.luxium.init.items;
 
-import com.easynull.luxium.init.tiles.TileEnergyRelay;
 import com.easynull.luxium.init.tiles.TileLuxiumCrystal;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -25,8 +24,6 @@ public class Tester extends Item {
         BlockEntity l = world.getBlockEntity(pos);
         if(l instanceof TileLuxiumCrystal crystal) {
             pl.sendMessage(new TextComponent(crystal.getLux() + ""), Util.NIL_UUID);
-        }else if(l instanceof TileEnergyRelay r) {
-            pl.sendMessage(new TextComponent(r.getEnergy(r) + ""), Util.NIL_UUID);
         }
         return super.useOn(pContext);
     }

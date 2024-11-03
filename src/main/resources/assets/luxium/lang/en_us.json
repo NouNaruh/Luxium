@@ -1,6 +1,9 @@
 {
-  "item.luxium.scepter_student": "Скипитр ученика",
-  "item.luxium.scepter_bright_lux": "Скипитр яркого сияния",
-  "item.luxium.scepter_crimson_moon": "Скипитр багровой луны",
-  "item.luxium.scepter_apostol_balance": "Скипитр апостала Равновесия"
+  "itemGroup.tab": "Luxium",
+  "item.luxium.chronicles": "Chronicles \"Sun to Moon\"",
+  "item.luxium.scepter_student": "Scepter student",
+  "item.luxium.scepter_bright_lux": "Scepter bright luxi",
+  "item.luxium.scepter_crimson_moon": "Scepter crimson moon",
+  "item.luxium.scepter_apostol_balance": "Scepter Apostol of Balance",
+  "block.luxium.luxium_crystal": "Luxium crystal"
 }

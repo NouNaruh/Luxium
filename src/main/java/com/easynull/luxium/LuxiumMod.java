@@ -1,7 +1,7 @@
 package com.easynull.luxium;
 
 import com.easynull.luxium.api.chronicles.Head;
-import com.easynull.luxium.client.renderer.tile.RendererEnergyRelay;
+import com.easynull.luxium.client.render.tile.RenderLuxiumCrystal;
 import com.easynull.luxium.init.ModInit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -35,7 +35,7 @@ public class LuxiumMod {
     private void client(final FMLClientSetupEvent event){
         Head.init();
         event.enqueueWork(() -> {
-            BlockEntityRenderers.register(ModInit.relay.get(), (r) -> new RendererEnergyRelay());
+            BlockEntityRenderers.register(ModInit.crystal.get(), (r) -> new RenderLuxiumCrystal());
         });
     }
 
