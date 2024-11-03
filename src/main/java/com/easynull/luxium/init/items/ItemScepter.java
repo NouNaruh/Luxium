@@ -35,7 +35,7 @@ public class ItemScepter extends Item implements IMagic {
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag fl) {
         CompoundTag tag = stack.getOrCreateTag();
         if(getMaxEnergy(EnergyType.TENEBRIS) > 0){
-            list.add(new TranslatableComponent("tootip.luxium.energy.lux", getEnergy(tag, EnergyType.LUX)).withStyle(ChatFormatting.WHITE).append((new TranslatableComponent(" " + "tootip.luxium.energy.tenebris", getEnergy(tag, EnergyType.TENEBRIS)).withStyle(ChatFormatting.DARK_GRAY))));
+            list.add(new TranslatableComponent("tootip.luxium.energy.lux", getEnergy(tag, EnergyType.LUX)).withStyle(ChatFormatting.WHITE).append((new TranslatableComponent("tootip.luxium.energy.tenebris", getEnergy(tag, EnergyType.TENEBRIS)).withStyle(ChatFormatting.DARK_GRAY))));
         }else{
             list.add(new TranslatableComponent("tootip.luxium.energy.lux",getEnergy(tag, EnergyType.LUX)).withStyle(ChatFormatting.WHITE));
         }

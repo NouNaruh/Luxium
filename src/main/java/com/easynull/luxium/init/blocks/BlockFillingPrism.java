@@ -31,7 +31,7 @@ public class BlockFillingPrism extends BaseEntityBlock {
     }
     @Override
     public void fillItemCategory(CreativeModeTab pTab, NonNullList<ItemStack> items) {
-        if(pTab == ModCreativeTab.tabSkin && pTab == CreativeModeTab.TAB_SEARCH) {
+        if(pTab == ModCreativeTab.tab) {
             for (PrismSkins skin : PrismSkins.values()) {
                 ItemStack stack = new ItemStack(this);
                 setSkin(stack, skin);
@@ -66,7 +66,7 @@ public class BlockFillingPrism extends BaseEntityBlock {
             }
         }
         if (!prism.getItemHandler().getItem(0).isEmpty()) {
-            player.getInventory().offhand.add(prism.getItemHandler().getItem(0));
+            player.getInventory().add(prism.getItemHandler().getItem(0));
             prism.getItemHandler().removeItemNoUpdate(0);
             return InteractionResult.SUCCESS;
         }
@@ -77,12 +77,12 @@ public class BlockFillingPrism extends BaseEntityBlock {
         if (!stack.hasTag()) stack.setTag(new CompoundTag());
         stack.getOrCreateTag().getString(skin.name());
     }
+    public static Material getMaterial(){
+        return Material.STONE;
+    }
     public enum PrismSkins {
         BASE,
         WOOD,
         ANGEL
-    }
-    public static Material getMaterial(){
-        return Material.STONE;
     }
 }
