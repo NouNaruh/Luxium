@@ -49,7 +49,6 @@ public class BlockFillingPrism extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> type) {
         return createTickerHelper(type, ModInit.prism.get(), TileFillingPrism::tick);
     }
-
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player player, InteractionHand hand, BlockHitResult pHit) {
         TileFillingPrism prism = (TileFillingPrism) pLevel.getBlockEntity(pPos);

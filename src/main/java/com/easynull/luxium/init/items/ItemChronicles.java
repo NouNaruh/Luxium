@@ -6,6 +6,7 @@ import com.easynull.luxium.init.ModCreativeTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -23,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemChronicles extends Item {
-    public final List<String> toms = new ArrayList<>();
+    public final List<TranslatableComponent> toms = new ArrayList<>();
     public ItemChronicles() {
         super(new Properties().tab(ModCreativeTab.tab));
-        toms.add("mastering");
+        toms.add(1, new TranslatableComponent("skin.luxium.prism_filling.angel"));
     }
 
     @Override
@@ -34,22 +35,12 @@ public class ItemChronicles extends Item {
         if (level.isClientSide) {
             Minecraft.getInstance().setScreen(new ScreenChronicles());
             level.playSound(pPlayer, pPlayer.getOnPos(), SoundEvents.BOOK_PUT, SoundSource.AMBIENT, 1.0F, 1.0F);
-            if(!getDefaultInstance().hasTag()) {
-                setTom("balance");
-            }
         }
         return super.use(level, pPlayer, hand);
     }
-    public String getTom() {
-        return toms.toString();
-    }
-    public void setTom(String name) {
-        toms.contains(name);
-    }
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag fl) {
-        tooltip.add(new TextComponent(getTom()));
+        tooltip.add(toms.get(1));
         super.appendHoverText(pStack, pLevel, tooltip, fl);
     }
-
 }

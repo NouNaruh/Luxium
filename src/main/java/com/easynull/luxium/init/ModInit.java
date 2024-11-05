@@ -4,6 +4,7 @@ import com.easynull.luxium.LuxiumMod;
 import com.easynull.luxium.init.blocks.*;
 import com.easynull.luxium.init.entities.SpiceMerchant;
 import com.easynull.luxium.init.items.*;
+import com.easynull.luxium.init.recipes.RecipePrism;
 import com.easynull.luxium.init.tiles.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -45,6 +46,7 @@ public class ModInit {
     public static RegistryObject<EntityType<SpiceMerchant>> spiceMerchant = ENTITIES.register("spice_merchant", () -> EntityType.Builder.of(SpiceMerchant::new, MobCategory.CREATURE).sized(1.50F, 2.1F).build(new ResourceLocation(LuxiumMod.ID,"spice_merchant").toString()));
 
     public static DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, LuxiumMod.ID);
+    public static RegistryObject<RecipeSerializer<RecipePrism>> recipePrism = RECIPES.register("filling_prism", () -> RecipePrism.Serializer.INSTANCE);
 
     public static void register(IEventBus bus){
         ITEMS.register(bus);

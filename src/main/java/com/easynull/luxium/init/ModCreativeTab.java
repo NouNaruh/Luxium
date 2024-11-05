@@ -10,10 +10,4 @@ public class ModCreativeTab {
             return new ItemStack(ModInit.scepter1.get());
         }
     };
-    public static CreativeModeTab tabSkin = new CreativeModeTab("tab_skin") {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(ModInit.fillingPrismI.get());
-        }
-    };
 }

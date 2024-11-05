@@ -17,7 +17,7 @@ public class TileLuxiumCrystal extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState pState, TileLuxiumCrystal tile) {
-        tile.getTileData().putDouble(EnergyType.LUX.name().toLowerCase(), tile.getLux() - 40);
+
     }
     public double getLux(){
         return Math.round((lux) * 10.0) / 10.0;

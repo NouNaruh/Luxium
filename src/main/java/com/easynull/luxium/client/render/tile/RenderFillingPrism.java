@@ -22,7 +22,7 @@ public class RenderFillingPrism extends LuxiumRender<TileFillingPrism> {
         BakedModel model = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getItemModel(stack);
         if(!stack.isEmpty()){
             ps.pushPose();
-            ps.translate(0.5F, 1.0F, 0.5F);
+            ps.translate(0.5F, 1.1F, 0.5F);
             ps.scale(1.0F, 1.0F, 1.0F);
             ps.mulPose(Vector3f.YN.rotationDegrees((float)ticksUp * 180.0F));
             ps.mulPose(Vector3f.XN.rotationDegrees((float)ticksUp * 30.0F));

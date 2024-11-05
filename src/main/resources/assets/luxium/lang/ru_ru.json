@@ -10,8 +10,13 @@
   "block.luxium.luxium_crystal": "Кристалл света",
   "block.luxium.filling_prism": "Призма Наполнения",
 
+  "skin.luxium.prism_filling.angel": "▶ (Ангельский зов)",
+  "skin.luxium.prism_filling.christmas": "▶ (Рождественнское торжество)",
+  "skin.luxium.prism_filling.halloween": "▶ (Страшная сказка)",
+
   "tootip.luxium.energy.lux": "▶ %s энергии Света",
   "tootip.luxium.energy.tenebris": "▶ %s энергии Тьмы",
 
-  "entity.luxium.spice_merchant": "Торговец пряностей"
+  "entity.luxium.spice_merchant": "Торговец пряностей",
+  "entity.luxium.demon_tenebris_armbands": "Демон Темных наручей"
 }

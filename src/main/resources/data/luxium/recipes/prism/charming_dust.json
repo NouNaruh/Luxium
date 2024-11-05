@@ -1,0 +1,18 @@
+{
+  "type": "luxium:filling_prism",
+  "output": {
+    "count": 1,
+    "item": "minecraft:obsidian"
+  },
+  "ingredients": [
+    {
+      "item": "luxium:chronicles"
+    }
+  ],
+  "energy": [
+    "lux"
+  ],
+  "amount": [
+    500
+  ]
+}
