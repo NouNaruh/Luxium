@@ -1,5 +1,7 @@
 package com.easynull.luxium.init.items;
 
+import com.easynull.luxium.api.energies.EnergyType;
+import com.easynull.luxium.init.tiles.TileFillingPrism;
 import com.easynull.luxium.init.tiles.TileLuxiumCrystal;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -24,6 +26,11 @@ public class Tester extends Item {
         BlockEntity l = world.getBlockEntity(pos);
         if(l instanceof TileLuxiumCrystal crystal) {
             pl.sendMessage(new TextComponent(crystal.getLux() + ""), Util.NIL_UUID);
+        }
+        if(l instanceof TileFillingPrism prism) {
+            for (EnergyType type : EnergyType.values()) {
+                pl.sendMessage(new TextComponent(prism.getEnergy(type) + type.name()), Util.NIL_UUID);
+            }
         }
         return super.useOn(pContext);
     }

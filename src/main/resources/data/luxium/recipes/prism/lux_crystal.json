@@ -1,0 +1,19 @@
+{
+  "type": "luxium:filling_prism",
+  "output": {
+    "item": "luxium:luxium_crystal"
+  },
+
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+
+  "energy": [
+    {
+      "type": "lux",
+      "amount": 2000
+    }
+  ]
+}

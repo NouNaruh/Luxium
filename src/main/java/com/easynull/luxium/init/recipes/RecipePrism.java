@@ -17,48 +17,39 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class RecipePrism implements Recipe<SimpleContainer> {
     private final NonNullList<Ingredient> inputs;
     private final ItemStack output;
     private final ResourceLocation id;
-    private final EnergyType type;
-    private final double energyInTick;
+    private final Map<EnergyType, Double> energyMap;
 
 
-    public RecipePrism(ResourceLocation id, ItemStack output, EnergyType type, double energyInTick, Ingredient... inputItems) {
+    public RecipePrism(ResourceLocation id, ItemStack output, Map<EnergyType, Double> energyMap, Ingredient... inputItems) {
         this.id = id;
         this.output = output;
-        this.type = type;
-        this.energyInTick = energyInTick;
+        this.energyMap = energyMap;
         this.inputs = NonNullList.of(Ingredient.EMPTY, inputItems);
     }
 
     @Override
     public boolean matches(SimpleContainer cont, Level pLevel) {
-        boolean craft = true;
-        for (int i = 0; i < 2; i += 1) {
-            if (!inputs.get(i).test(cont.getItem(i))) {
-                craft = false;
-            }
+        if(pLevel.isClientSide()) {
+            return false;
         }
-        return craft;
+        return inputs.get(0).test(cont.getItem(0));
     }
 
-    public EnergyType getEnergyType(){
-        return type;
-    }
-
-    public double getEnergyInTick(){
-        return energyInTick;
+    public Map<EnergyType, Double> getEnergyMap() {
+        return Collections.unmodifiableMap(energyMap);
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer container) {
+    public @NotNull ItemStack assemble(SimpleContainer container) {
         return output;
     }
     @Override
@@ -67,7 +58,7 @@ public class RecipePrism implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public @NotNull ItemStack getResultItem() {
         return output.copy();
     }
 
@@ -87,6 +78,7 @@ public class RecipePrism implements Recipe<SimpleContainer> {
     }
 
     public static class Type implements RecipeType<RecipePrism> {
+        private Type() {}
         public static Type INSTANCE = new Type();
         public static final String ID = "filling_prism";
     }
@@ -103,9 +95,22 @@ public class RecipePrism implements Recipe<SimpleContainer> {
             for (JsonElement e : pIngredients) {
                 inputs.add(Ingredient.fromJson(e));
             }
-            EnergyType type = EnergyType.valueOf(GsonHelper.getAsString(jsObj, "energy").toLowerCase());
-            double energyAmount = GsonHelper.getAsDouble(jsObj, "amount");
-            return new RecipePrism(id, output, type, energyAmount, inputs.toArray(new Ingredient[0]));
+            JsonArray energyArray = jsObj.getAsJsonArray("energy");
+
+            Map<EnergyType, Double> energyMap = new HashMap<>();
+            for (JsonElement energyElement : energyArray) {
+                JsonObject energyObject = energyElement.getAsJsonObject();
+                if (energyObject.has("type")) {
+                    double energyAmount;
+                    String energyTypeName = energyObject.get("type").getAsString();
+                    EnergyType energyType = EnergyType.valueOf(energyTypeName);
+                    if (energyObject.has("amount")) {
+                        energyAmount = energyObject.get("amount").getAsDouble();
+                        energyMap.put(energyType, energyAmount);
+                    }
+                }
+            }
+            return new RecipePrism(id, output, energyMap, inputs.toArray(new Ingredient[0]));
         }
 
         @Nullable
@@ -115,11 +120,13 @@ public class RecipePrism implements Recipe<SimpleContainer> {
             for (int i = 0; i < inputs.length; i++) {
                 inputs[i] = Ingredient.fromNetwork(byteBuf);
             }
+            Map<EnergyType, Double> energyMap = new HashMap<>();
             ItemStack output = byteBuf.readItem();
-            EnergyType type = byteBuf.readEnum(EnergyType.class);
-            double energyAmount = byteBuf.readDouble();
 
-            return new RecipePrism(id, output, type, energyAmount, inputs);
+            EnergyType energyType = byteBuf.readEnum(EnergyType.class);
+            double energyAmount = byteBuf.readDouble();
+            energyMap.put(energyType, energyAmount);
+            return new RecipePrism(id, output, energyMap, inputs);
         }
 
         @Override
@@ -128,10 +135,13 @@ public class RecipePrism implements Recipe<SimpleContainer> {
             for (Ingredient input : recipe.getIngredients()) {
                 input.toNetwork(byteBuf);
             }
-
             byteBuf.writeItemStack(recipe.getResultItem(), false);
-            byteBuf.writeEnum(recipe.getEnergyType());
-            byteBuf.writeDouble(recipe.getEnergyInTick());
+            Map<EnergyType, Double> energyMap = recipe.getEnergyMap();
+            byteBuf.writeInt(energyMap.size());
+            for (Map.Entry<EnergyType, Double> entry : energyMap.entrySet()) {
+                byteBuf.writeEnum(entry.getKey());
+                byteBuf.writeDouble(entry.getValue());
+            }
         }
     }
 }

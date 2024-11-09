@@ -1,11 +1,9 @@
 package com.easynull.luxium.init.items;
 
 import com.easynull.luxium.api.chronicles.ScreenChronicles;
-import com.easynull.luxium.client.Utils;
 import com.easynull.luxium.init.ModCreativeTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -19,15 +17,13 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ItemChronicles extends Item {
     public final List<TranslatableComponent> toms = new ArrayList<>();
     public ItemChronicles() {
         super(new Properties().tab(ModCreativeTab.tab));
-        toms.add(1, new TranslatableComponent("skin.luxium.prism_filling.angel"));
+        toms.add(new TranslatableComponent("skin.luxium.prism_filling.angel"));
     }
 
     @Override
@@ -40,7 +36,6 @@ public class ItemChronicles extends Item {
     }
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag fl) {
-        tooltip.add(toms.get(1));
         super.appendHoverText(pStack, pLevel, tooltip, fl);
     }
 }

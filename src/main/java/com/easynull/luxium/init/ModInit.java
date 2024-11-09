@@ -2,22 +2,29 @@ package com.easynull.luxium.init;
 
 import com.easynull.luxium.LuxiumMod;
 import com.easynull.luxium.init.blocks.*;
+import com.easynull.luxium.init.entities.DemonTenebrisArmbands;
 import com.easynull.luxium.init.entities.SpiceMerchant;
 import com.easynull.luxium.init.items.*;
 import com.easynull.luxium.init.recipes.RecipePrism;
 import com.easynull.luxium.init.tiles.*;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.*;
 
-import java.awt.*;
+import java.util.function.Supplier;
 
 public class ModInit {
     public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, LuxiumMod.ID);
@@ -40,19 +47,21 @@ public class ModInit {
     public static RegistryObject<Item> luxiumCrystalI = ITEMS.register("luxium_crystal",() -> new BlockItem(luxiumCrystal.get(),new Item.Properties().tab(ModCreativeTab.tab)));
     public static RegistryObject<Item> fillingPrismI = ITEMS.register("filling_prism",() -> new BlockItem(fillingPrism.get(),new Item.Properties().tab(ModCreativeTab.tab)));
 
-    //Spawn eggs
-
     public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, LuxiumMod.ID);
     public static RegistryObject<EntityType<SpiceMerchant>> spiceMerchant = ENTITIES.register("spice_merchant", () -> EntityType.Builder.of(SpiceMerchant::new, MobCategory.CREATURE).sized(1.50F, 2.1F).build(new ResourceLocation(LuxiumMod.ID,"spice_merchant").toString()));
+    public static RegistryObject<EntityType<DemonTenebrisArmbands>> demonArmbands = ENTITIES.register("demon_tenebris_armbands", () -> EntityType.Builder.of(DemonTenebrisArmbands::new, MobCategory.CREATURE).sized(0.9F, 1.4F).build(new ResourceLocation(LuxiumMod.ID,"spice_merchant").toString()));
+    public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, LuxiumMod.ID);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), LuxiumMod.ID);
 
-    public static DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, LuxiumMod.ID);
-    public static RegistryObject<RecipeSerializer<RecipePrism>> recipePrism = RECIPES.register("filling_prism", () -> RecipePrism.Serializer.INSTANCE);
+    public static RegistryObject<RecipeType<RecipePrism>> recipeTypePrism = RECIPE_TYPES.register(RecipePrism.Type.ID, () -> RecipePrism.Type.INSTANCE);
+    public static RegistryObject<RecipeSerializer<RecipePrism>> recipeSerPrism = RECIPE_SERIALIZERS.register("filling_prism", () -> RecipePrism.Serializer.INSTANCE);
 
     public static void register(IEventBus bus){
         ITEMS.register(bus);
         BLOCKS.register(bus);
         TILES.register(bus);
         ENTITIES.register(bus);
-        RECIPES.register(bus);
+        RECIPE_TYPES.register(bus);
+        RECIPE_SERIALIZERS.register(bus);
     }
 }

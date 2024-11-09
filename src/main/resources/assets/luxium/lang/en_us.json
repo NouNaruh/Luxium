@@ -10,13 +10,17 @@
   "block.luxium.luxium_crystal": "Luxium crystal",
   "block.luxium.filling_prism": "Filling prism",
 
-  "skin.luxium.prism_filling.angel": "▶ (The Angelic call)",
-  "skin.luxium.prism_filling.christmas": "▶ (Christmas celebration)",
-  "skin.luxium.prism_filling.halloween": "▶ (Scary tale)",
+  "skin.luxium.prism_filling.angel": "Filling prism ▶ (The Angelic call)",
+  "skin.luxium.prism_filling.christmas": "Filling prism ▶ (Christmas celebration)",
+  "skin.luxium.prism_filling.halloween": "Filling prism ▶ (Scary tale)",
 
   "tootip.luxium.energy.lux": "▶ %s Lux",
-  "tootip.luxium.energy.tenebris": "▶ %s Tenebris",
+  "tootip.luxium.energy.tenebris": " ▶ %s Tenebris",
+  "tootip.luxium.energy.storage": "Maybe he keeps it in himself:",
 
   "entity.luxium.spice_merchant": "Spice merchant",
-  "entity.luxium.demon_tenebris_armbands": "Demon Tenebris armbands"
+  "entity.luxium.demon_tenebris_armbands": "Demon Tenebris armbands",
+
+  "message.luxium.entity.demon.first_meeting.1": "What? Where am I?",
+  "message.luxium.entity.demon.first_meeting.2": "Oh! Well, not that. Another little man decided to summon me for the sake of... armbands..."
 }

@@ -1,11 +1,13 @@
 package com.easynull.luxium.init.blocks;
 
+import com.easynull.luxium.client.utils.TooltipUtil;
 import com.easynull.luxium.init.ModCreativeTab;
 import com.easynull.luxium.init.ModInit;
 import com.easynull.luxium.init.tiles.TileFillingPrism;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
@@ -13,6 +15,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,16 +29,19 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class BlockFillingPrism extends BaseEntityBlock {
     public BlockFillingPrism() {
-        super(BlockBehaviour.Properties.of(getMaterial()));
+        super(BlockBehaviour.Properties.of(Material.STONE));
     }
     @Override
     public void fillItemCategory(CreativeModeTab pTab, NonNullList<ItemStack> items) {
         if(pTab == ModCreativeTab.tab) {
             for (PrismSkins skin : PrismSkins.values()) {
                 ItemStack stack = new ItemStack(this);
-                setSkin(stack, skin);
+                String name = "skin.luxium.prism_filling." + skin.name();
+                setSkin(stack, skin, name);
                 items.add(stack);
             }
         }
@@ -72,16 +79,24 @@ public class BlockFillingPrism extends BaseEntityBlock {
         return InteractionResult.PASS;
     }
 
-    public void setSkin(ItemStack stack, PrismSkins skin) {
+    public void setSkin(ItemStack stack, PrismSkins skin, String name) {
         if (!stack.hasTag()) stack.setTag(new CompoundTag());
         stack.getOrCreateTag().getString(skin.name());
+        if(skin != PrismSkins.base) {
+            stack.setHoverName(new TranslatableComponent(name));
+        }
     }
-    public static Material getMaterial(){
-        return Material.STONE;
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
+        TooltipUtil.tooltipEnergy(list, 6000, 6000);
+        super.appendHoverText(stack, pLevel, list, pFlag);
     }
+
     public enum PrismSkins {
-        BASE,
-        WOOD,
-        ANGEL
+        base,
+        angel,
+        halloween,
+        christmas
     }
 }

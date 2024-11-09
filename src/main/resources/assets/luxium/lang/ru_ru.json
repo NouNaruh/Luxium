@@ -2,21 +2,25 @@
   "itemGroup.tab": "Luxium",
 
   "item.luxium.chronicles": "Хроники \"От Солнца до Луны\"",
-  "item.luxium.scepter_student": "Скипитр ученика",
-  "item.luxium.scepter_bright_lux": "Скипитр яркого сияния",
-  "item.luxium.scepter_crimson_moon": "Скипитр багровой луны",
-  "item.luxium.scepter_apostol_balance": "Скипитр Апостала Равновесия",
+  "item.luxium.scepter_student": "Скипетр ученика",
+  "item.luxium.scepter_bright_lux": "Скипетр яркого сияния",
+  "item.luxium.scepter_crimson_moon": "Скипетр багровой луны",
+  "item.luxium.scepter_apostol_balance": "Скипетр Апостола Равновесия",
 
   "block.luxium.luxium_crystal": "Кристалл света",
   "block.luxium.filling_prism": "Призма Наполнения",
 
-  "skin.luxium.prism_filling.angel": "▶ (Ангельский зов)",
-  "skin.luxium.prism_filling.christmas": "▶ (Рождественнское торжество)",
-  "skin.luxium.prism_filling.halloween": "▶ (Страшная сказка)",
+  "skin.luxium.prism_filling.angel": "Призма Наполнения ▶ (Ангельский зов)",
+  "skin.luxium.prism_filling.christmas": "Призма Наполнения ▶ (Рождественнское торжество)",
+  "skin.luxium.prism_filling.halloween": "Призма Наполнения ▶ (Страшная сказка)",
 
   "tootip.luxium.energy.lux": "▶ %s энергии Света",
-  "tootip.luxium.energy.tenebris": "▶ %s энергии Тьмы",
+  "tootip.luxium.energy.tenebris": " ▶ %s энергии Тьмы",
+  "tootip.luxium.energy.storage": "Может хранит в себе:",
 
   "entity.luxium.spice_merchant": "Торговец пряностей",
-  "entity.luxium.demon_tenebris_armbands": "Демон Темных наручей"
+  "entity.luxium.demon_tenebris_armbands": "Демон Темных наручей",
+
+  "message.luxium.entity.demon.first_meeting.1": "Что? Где это я?"
+
 }

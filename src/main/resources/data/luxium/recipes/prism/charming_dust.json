@@ -1,18 +1,23 @@
 {
   "type": "luxium:filling_prism",
   "output": {
-    "count": 1,
-    "item": "minecraft:obsidian"
+    "item": "luxium:scepter_student"
   },
+
   "ingredients": [
     {
-      "item": "luxium:chronicles"
+      "item": "minecraft:obsidian"
     }
   ],
+
   "energy": [
-    "lux"
-  ],
-  "amount": [
-    500
+    {
+      "type": "lux",
+      "amount": 200
+    },
+    {
+      "type": "tenebris",
+      "amount": 1000
+    }
   ]
 }
