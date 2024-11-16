@@ -44,7 +44,7 @@ public class ItemScepter extends Item implements IEnergyItem {
     }
     @Override
     public InteractionResult useOn(UseOnContext uon) {
-        activateCraftPrism(uon.getLevel(), uon.getClickedPos(), uon.getPlayer());
+        activateCraftPrism(uon.getLevel(), uon.getClickedPos());
         return super.useOn(uon);
     }
     @Override
@@ -56,12 +56,10 @@ public class ItemScepter extends Item implements IEnergyItem {
         }
         return super.use(world, player, hand);
     }
-    public void activateCraftPrism(Level lv, BlockPos pos, Player player) {
-        if (!lv.isClientSide()) {
-            TileFillingPrism prism = (TileFillingPrism) lv.getBlockEntity(pos);
-            if (prism != null) {
-                prism.activateCraft(player);
-            }
+    public void activateCraftPrism(Level lv, BlockPos pos) {
+        TileFillingPrism prism = (TileFillingPrism) lv.getBlockEntity(pos);
+        if (prism != null) {
+            prism.canCraft = true;
         }
     }
 }
