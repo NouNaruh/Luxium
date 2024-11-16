@@ -1,22 +1,19 @@
 package com.easynull.luxium.client.utils;
 
 import com.easynull.luxium.api.energies.EnergyType;
-import com.easynull.luxium.api.energies.IMagic;
+import com.easynull.luxium.api.energies.IEnergyItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class TooltipUtil {
     public static void tooltipEnergy(ItemStack st, List<Component> list){
         CompoundTag tag = st.getOrCreateTag();
-        if(st.getItem() instanceof IMagic stack) {
+        if(st.getItem() instanceof IEnergyItem stack) {
             if (stack.getMaxEnergy(EnergyType.tenebris) > 0) {
                 list.add(new TranslatableComponent("tootip.luxium.energy.lux", stack.getEnergy(tag, EnergyType.lux)).withStyle(ChatFormatting.WHITE).append((new TranslatableComponent("tootip.luxium.energy.tenebris", stack.getEnergy(tag, EnergyType.tenebris)).withStyle(ChatFormatting.DARK_GRAY))));
             } else {

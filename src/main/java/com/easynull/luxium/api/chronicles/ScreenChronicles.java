@@ -1,5 +1,6 @@
 package com.easynull.luxium.api.chronicles;
 
+import com.easynull.luxium.client.utils.ClientUtil;
 import com.easynull.luxium.client.utils.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
@@ -24,14 +25,14 @@ public class ScreenChronicles extends Screen {
 
     @Override
     public void render(PoseStack ps, int pMouseX, int pMouseY, float pPartialTick) {
-        renderBackground(ps);
-        double ticksUp = (Minecraft.getInstance().level.getGameTime() + pPartialTick) * 4;
-        ticksUp = (ticksUp) % 360;
-        ps.pushPose();
-        RenderUtil.renderItemGui(Items.ANVIL.getDefaultInstance(),ps,0,10,10,10,10);
-        ps.mulPose(Vector3f.ZP.rotationDegrees((float) ticksUp));
-        ps.popPose();
         super.render(ps, pMouseX, pMouseY, pPartialTick);
+        renderBackground(ps);
+        double ticksUp = (ClientUtil.ticksInGame + pPartialTick) * 4;
+        ticksUp = ((ticksUp) % 360) * 0.0360F;
+        ps.pushPose();
+        RenderUtil.renderItemGui(Items.ANVIL.getDefaultInstance(), ps,0,10,10,10,10);
+        ps.mulPose(Vector3f.ZP.rotation((float) ticksUp));
+        ps.popPose();
     }
 
     @Override

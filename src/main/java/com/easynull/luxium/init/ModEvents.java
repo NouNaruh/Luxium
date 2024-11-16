@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = LuxiumMod.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEvents {
+    //register
     @SubscribeEvent
     public static void addEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(ModInit.spiceMerchant.get(), SpiceMerchant.createAttributes().build());

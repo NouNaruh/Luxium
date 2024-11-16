@@ -3,20 +3,18 @@ package com.easynull.luxium;
 import com.easynull.luxium.api.chronicles.Head;
 import com.easynull.luxium.client.render.tile.RenderFillingPrism;
 import com.easynull.luxium.client.render.tile.RenderLuxiumCrystal;
-import com.easynull.luxium.client.utils.ClientTickUtil;
-import com.easynull.luxium.init.ModEvents;
+import com.easynull.luxium.client.utils.ClientUtil;
 import com.easynull.luxium.init.ModInit;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.transformer.Config;
 
 @Mod(LuxiumMod.ID)
 public class LuxiumMod {
@@ -41,12 +39,14 @@ public class LuxiumMod {
 
     private void client(final FMLClientSetupEvent event){
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        forgeBus.addListener(ClientTickUtil::clientTick);
+        forgeBus.addListener(ClientUtil::clientTick);
         Head.init();
         event.enqueueWork(() -> {
             BlockEntityRenderers.register(ModInit.crystal.get(), (r) -> new RenderLuxiumCrystal());
             BlockEntityRenderers.register(ModInit.prism.get(), (r) -> new RenderFillingPrism());
         });
+        ItemBlockRenderTypes.setRenderLayer(ModInit.luxiumCrystal.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModInit.fillingPrism.get(), RenderType.cutout());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event){

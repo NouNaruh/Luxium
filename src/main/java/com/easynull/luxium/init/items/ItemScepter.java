@@ -1,32 +1,33 @@
 package com.easynull.luxium.init.items;
 
 import com.easynull.luxium.api.energies.EnergyType;
-import com.easynull.luxium.api.energies.IMagic;
+import com.easynull.luxium.api.energies.IEnergyItem;
 import com.easynull.luxium.client.utils.TooltipUtil;
 import com.easynull.luxium.init.ModCreativeTab;
-import net.minecraft.ChatFormatting;
+import com.easynull.luxium.init.tiles.TileFillingPrism;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ItemScepter extends Item implements IMagic {
-    final double maxLight;
-    final double maxDark;
+public class ItemScepter extends Item implements IEnergyItem {
+    final double maxLux, maxTen;
 
-    public ItemScepter(double maxLight, double maxDark) {
+    public ItemScepter(double maxLux, double maxTen) {
         super(new Properties().stacksTo(1).tab(ModCreativeTab.tab));
-        this.maxLight = maxLight;
-        this.maxDark = maxDark;
+        this.maxLux = maxLux;
+        this.maxTen = maxTen;
     }
 
     @Override
@@ -37,17 +38,30 @@ public class ItemScepter extends Item implements IMagic {
     @Override
     public double getMaxEnergy(EnergyType type) {
         return switch (type) {
-            case lux -> maxLight;
-            case tenebris -> maxDark;
+            case lux -> maxLux;
+            case tenebris -> maxTen;
         };
     }
-
+    @Override
+    public InteractionResult useOn(UseOnContext uon) {
+        activateCraftPrism(uon.getLevel(), uon.getClickedPos(), uon.getPlayer());
+        return super.useOn(uon);
+    }
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         CompoundTag tag = stack.getOrCreateTag();
-        setEnergy(tag, EnergyType.tenebris, 8.56);
-        setEnergy(tag, EnergyType.lux, 10.99);
+        for(EnergyType type : EnergyType.values()) {
+            addEnergy(tag, type, 15.784);
+        }
         return super.use(world, player, hand);
+    }
+    public void activateCraftPrism(Level lv, BlockPos pos, Player player) {
+        if (!lv.isClientSide()) {
+            TileFillingPrism prism = (TileFillingPrism) lv.getBlockEntity(pos);
+            if (prism != null) {
+                prism.activateCraft(player);
+            }
+        }
     }
 }

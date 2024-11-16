@@ -14,16 +14,31 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemChronicles extends Item {
-    public final List<TranslatableComponent> toms = new ArrayList<>();
+    public final List<TranslatableComponent> tomes = new ArrayList<>();
+
     public ItemChronicles() {
         super(new Properties().tab(ModCreativeTab.tab));
-        toms.add(new TranslatableComponent("skin.luxium.prism_filling.angel"));
+        addTomes("tootip.luxium.chronicles.tom1");
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public List<TranslatableComponent> getTomes() {
+        return tomes;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void addTomes(String tome) {
+        if(!tomes.contains(new TranslatableComponent(tome))) {
+            tomes.add(new TranslatableComponent(tome));
+        }
     }
 
     @Override
@@ -31,11 +46,14 @@ public class ItemChronicles extends Item {
         if (level.isClientSide) {
             Minecraft.getInstance().setScreen(new ScreenChronicles());
             level.playSound(pPlayer, pPlayer.getOnPos(), SoundEvents.BOOK_PUT, SoundSource.AMBIENT, 1.0F, 1.0F);
+            addTomes("tootip.luxium.chronicles.tom2");
         }
         return super.use(level, pPlayer, hand);
     }
+
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag fl) {
-        super.appendHoverText(pStack, pLevel, tooltip, fl);
+        tooltip.addAll(getTomes());
     }
 }

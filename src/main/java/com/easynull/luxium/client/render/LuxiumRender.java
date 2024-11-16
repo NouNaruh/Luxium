@@ -16,8 +16,4 @@ public abstract class LuxiumRender<T extends BlockEntity> implements BlockEntity
         BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getModelManager().getModel(model);
         Minecraft.getInstance().getItemRenderer().render(new ItemStack(Items.DIRT), tt, leftHand, ps, buffer, light, overlay, bakedmodel);
     }
-    public void renderModel(ItemStack stack, ItemTransforms.TransformType tt, PoseStack ps, MultiBufferSource buffer, int light, int overlay) {
-        BakedModel bakedmodel = Minecraft.getInstance().getItemRenderer().getItemModelShaper().getItemModel(stack);
-        Minecraft.getInstance().getItemRenderer().render(new ItemStack(Items.DIRT), tt, false, ps, buffer, light, overlay, bakedmodel);
-    }
 }

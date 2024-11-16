@@ -29,7 +29,7 @@ public class RenderUtil {
             Lighting.setupFor3DItems();
         }
 
-        renderer.render(stack, ItemTransforms.TransformType.GUI, false, new PoseStack(), buffer, 15728880, OverlayTexture.NO_OVERLAY, model);
+        renderer.render(stack, ItemTransforms.TransformType.GUI, false, ps, buffer, 15728880, OverlayTexture.NO_OVERLAY, model);
         buffer.endBatch();
         ps.popPose();
         RenderSystem.applyModelViewMatrix();

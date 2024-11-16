@@ -78,14 +78,12 @@ public class RecipePrism implements Recipe<SimpleContainer> {
     }
 
     public static class Type implements RecipeType<RecipePrism> {
-        private Type() {}
         public static Type INSTANCE = new Type();
         public static final String ID = "filling_prism";
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipePrism> {
         public static Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(LuxiumMod.ID,"filling_prism");
 
         @Override
         public RecipePrism fromJson(ResourceLocation id, JsonObject jsObj) {
@@ -101,7 +99,7 @@ public class RecipePrism implements Recipe<SimpleContainer> {
             for (JsonElement energyElement : energyArray) {
                 JsonObject energyObject = energyElement.getAsJsonObject();
                 if (energyObject.has("type")) {
-                    double energyAmount;
+                    double energyAmount = 1;
                     String energyTypeName = energyObject.get("type").getAsString();
                     EnergyType energyType = EnergyType.valueOf(energyTypeName);
                     if (energyObject.has("amount")) {

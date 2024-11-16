@@ -18,7 +18,7 @@ public class TileLuxiumCrystal extends TileMod {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState pState, TileLuxiumCrystal tile) {
-
+        BlockEntity receive = level.getBlockEntity(pos);
     }
     public double getLux(){
         return Math.round((lux) * 10.0) / 10.0;

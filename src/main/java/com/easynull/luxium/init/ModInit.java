@@ -36,9 +36,9 @@ public class ModInit {
     public static RegistryObject<BlockEntityType<TileFillingPrism>> prism = TILES.register("filling_prism", () -> BlockEntityType.Builder.of(TileFillingPrism::new, fillingPrism.get()).build(null));
 
     public static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, LuxiumMod.ID);
-    //Development item
+    //Development items
     public static RegistryObject<Item> developmentItem = ITEMS.register("development_item", Tester::new);
-    //Base item
+    //Base items
     public static RegistryObject<Item> chronicles = ITEMS.register("chronicles", ItemChronicles::new);
     public static RegistryObject<Item> scepter1 = ITEMS.register("scepter_student",() -> new ItemScepter(50, 0));
     public static RegistryObject<Item> scepter2 = ITEMS.register("scepter_bright_lux",() -> new ItemScepter(150, 0));
@@ -49,10 +49,10 @@ public class ModInit {
 
     public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, LuxiumMod.ID);
     public static RegistryObject<EntityType<SpiceMerchant>> spiceMerchant = ENTITIES.register("spice_merchant", () -> EntityType.Builder.of(SpiceMerchant::new, MobCategory.CREATURE).sized(1.50F, 2.1F).build(new ResourceLocation(LuxiumMod.ID,"spice_merchant").toString()));
-    public static RegistryObject<EntityType<DemonTenebrisArmbands>> demonArmbands = ENTITIES.register("demon_tenebris_armbands", () -> EntityType.Builder.of(DemonTenebrisArmbands::new, MobCategory.CREATURE).sized(0.9F, 1.4F).build(new ResourceLocation(LuxiumMod.ID,"spice_merchant").toString()));
+    public static RegistryObject<EntityType<DemonTenebrisArmbands>> demonArmbands = ENTITIES.register("demon_tenebris_armbands", () -> EntityType.Builder.of(DemonTenebrisArmbands::new, MobCategory.CREATURE).sized(0.9F, 1.4F).build(new ResourceLocation(LuxiumMod.ID,"demon_tenebris_armbands").toString()));
+
     public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, LuxiumMod.ID);
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), LuxiumMod.ID);
-
     public static RegistryObject<RecipeType<RecipePrism>> recipeTypePrism = RECIPE_TYPES.register(RecipePrism.Type.ID, () -> RecipePrism.Type.INSTANCE);
     public static RegistryObject<RecipeSerializer<RecipePrism>> recipeSerPrism = RECIPE_SERIALIZERS.register("filling_prism", () -> RecipePrism.Serializer.INSTANCE);
 
