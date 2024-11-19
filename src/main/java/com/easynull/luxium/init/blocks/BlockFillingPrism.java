@@ -12,14 +12,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -82,6 +85,17 @@ public class BlockFillingPrism extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if (!pState.is(pNewState.getBlock())) {
+            TileFillingPrism prism = (TileFillingPrism) pLevel.getBlockEntity(pPos);
+            ItemStack stack = prism.getItemHandler().getItem(0);
+            Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY() + 0.8, pPos.getZ(), stack);
+            super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+        }
     }
 
     public void setSkin(ItemStack stack, PrismSkins skin, String name) {

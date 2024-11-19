@@ -23,7 +23,7 @@ public class RenderFillingPrism extends LuxiumRender<TileFillingPrism> {
         ItemStack stack = prism.getItemHandler().getItem(0);
         if(!stack.isEmpty()){
             ps.pushPose();
-            ps.translate(0.5F, 1.25F + (float)(Math.sin(Math.toRadians(ticksUp)) * 0.43125F), 0.5F);
+            ps.translate(0.5F, 1.4F + (float)(Math.sin(Math.toRadians(ticksUp)) * 0.43125F), 0.5F);
             ps.scale(0.9F, 0.9F, 0.9F);
             ps.mulPose(Vector3f.YN.rotation((float)ticksUp * 0.0360F));
             ps.mulPose(Vector3f.XP.rotation((float)ticksUp * 0.0360F));

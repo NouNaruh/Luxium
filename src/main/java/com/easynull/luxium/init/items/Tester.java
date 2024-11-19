@@ -31,6 +31,7 @@ public class Tester extends Item {
             for (EnergyType type : EnergyType.values()) {
                 pl.sendMessage(new TextComponent(prism.getEnergy(type) + type.name()), Util.NIL_UUID);
             }
+            pl.sendMessage(new TextComponent(prism.getEnergyMax() + ""), Util.NIL_UUID);
         }
         return super.useOn(pContext);
     }
