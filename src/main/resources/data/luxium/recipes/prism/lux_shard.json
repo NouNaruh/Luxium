@@ -1,19 +1,19 @@
 {
   "type": "luxium:filling_prism",
   "output": {
-    "item": "luxium:luxium_crystal"
+    "item": "luxium:luxium_shard"
   },
 
   "ingredients": [
     {
-      "item": "minecraft:dirt"
+      "item": "minecraft:glowstone"
     }
   ],
 
   "energy": [
     {
       "type": "lux",
-      "amount": 2000
+      "amount": 240
     }
   ]
 }

@@ -40,10 +40,12 @@ public class ModInit {
     public static RegistryObject<Item> developmentItem = ITEMS.register("development_item", Tester::new);
     //Base items
     public static RegistryObject<Item> chronicles = ITEMS.register("chronicles", ItemChronicles::new);
+    public static RegistryObject<Item> charmingDust = ITEMS.register("charming_dust",() -> new Item(new Item.Properties().tab(ModCreativeTab.tab)));
     public static RegistryObject<Item> scepter1 = ITEMS.register("scepter_student",() -> new ItemScepter(50, 0));
     public static RegistryObject<Item> scepter2 = ITEMS.register("scepter_bright_lux",() -> new ItemScepter(150, 0));
     public static RegistryObject<Item> scepter3 = ITEMS.register("scepter_crimson_moon",() -> new ItemScepter(450, 300));
     public static RegistryObject<Item> scepter4 = ITEMS.register("scepter_apostol_balance",() -> new ItemScepter(1000, 1000));
+    public static RegistryObject<Item> luxShard = ITEMS.register("luxium_shard",() -> new Item(new Item.Properties().tab(ModCreativeTab.tab)));
     public static RegistryObject<Item> luxiumCrystalI = ITEMS.register("luxium_crystal",() -> new BlockItem(luxiumCrystal.get(),new Item.Properties().tab(ModCreativeTab.tab)));
     public static RegistryObject<Item> fillingPrismI = ITEMS.register("filling_prism",() -> new BlockItem(fillingPrism.get(),new Item.Properties().tab(ModCreativeTab.tab)));
 

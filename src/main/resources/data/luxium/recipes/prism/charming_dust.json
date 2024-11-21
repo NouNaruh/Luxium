@@ -1,23 +1,23 @@
 {
   "type": "luxium:filling_prism",
   "output": {
-    "item": "luxium:scepter_student"
+    "item": "luxium:charming_dust"
   },
 
   "ingredients": [
     {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:redstone"
     }
   ],
 
   "energy": [
     {
       "type": "lux",
-      "amount": 200
+      "amount": 120
     },
     {
       "type": "tenebris",
-      "amount": 1000
+      "amount": 250
     }
   ]
 }

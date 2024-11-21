@@ -24,6 +24,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,7 +47,7 @@ public class BlockFillingPrism extends BaseEntityBlock {
     public void fillItemCategory(CreativeModeTab pTab, NonNullList<ItemStack> items) {
         if(pTab == ModCreativeTab.tab) {
             for (PrismSkins skin : PrismSkins.values()) {
-                ItemStack stack = new ItemStack(this.defaultBlockState().getBlock());
+                ItemStack stack = new ItemStack(this);
                 String name = "skin.luxium.prism_filling." + skin.name();
                 setSkin(stack, skin, name);
                 items.add(stack);
@@ -104,12 +106,6 @@ public class BlockFillingPrism extends BaseEntityBlock {
         if(skin != PrismSkins.base) {
             stack.setHoverName(new TranslatableComponent(name));
         }
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
-        TooltipUtil.tooltipEnergy(list, 6000, 6000);
-        super.appendHoverText(stack, pLevel, list, pFlag);
     }
 
     public enum PrismSkins {

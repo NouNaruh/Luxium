@@ -4,11 +4,14 @@ import com.easynull.luxium.client.render.LuxiumRender;
 import com.easynull.luxium.client.utils.ClientUtil;
 import com.easynull.luxium.init.tiles.TileFillingPrism;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +32,16 @@ public class RenderFillingPrism extends LuxiumRender<TileFillingPrism> {
             ps.mulPose(Vector3f.XP.rotation((float)ticksUp * 0.0360F));
             Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED, LightTexture.FULL_SKY, OverlayTexture.NO_OVERLAY, ps, source, 0);
             ps.popPose();
+
+            ps.pushPose();
+            VertexConsumer vertex = source.getBuffer(RenderType.lightning());
+            Matrix4f matrix = ps.last().pose();
+            int alpha = (int)(255.0F * (1.0F - Math.min(ticksUp > 0.8F ? (ticksUp - 0.8F) / 0.2F : 0.0F, 1.0F)));
+            vertex01(vertex, matrix, 0);
+            ps.popPose();
         }
+    }
+    private static void vertex01(VertexConsumer ver, Matrix4f matrix, int alpha) {
+        ver.vertex(matrix, 0.0F, 0.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
     }
 }

@@ -51,9 +51,6 @@ public class ItemScepter extends Item implements IEnergyItem {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         CompoundTag tag = stack.getOrCreateTag();
-        for(EnergyType type : EnergyType.values()) {
-            addEnergy(tag, type, 15.784);
-        }
         return super.use(world, player, hand);
     }
     public void activateCraftPrism(Level lv, BlockPos pos) {

@@ -1,0 +1,19 @@
+{
+  "type": "luxium:filling_prism",
+  "output": {
+    "item": "luxium:scepter_student"
+  },
+
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+
+  "energy": [
+    {
+      "type": "lux",
+      "amount": 32
+    }
+  ]
+}
