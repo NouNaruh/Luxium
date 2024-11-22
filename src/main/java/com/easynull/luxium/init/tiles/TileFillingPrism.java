@@ -80,22 +80,19 @@ public class TileFillingPrism extends TileHideInventory implements IEnergyBlock 
     }
     private boolean allConsumeEnergy(RecipePrism recipe) {
         for (Map.Entry<EnergyType, Double> entry : recipe.getEnergyMap().entrySet()) {
+            if(!craftedMap.containsKey(entry.getKey())) {
+                consumed = craftedMap.getOrDefault(entry.getKey(), 0.0);
+            }
             double craftedEnergy = craftedMap.getOrDefault(entry.getKey(), entry.getValue());
             double energyToConsume = Math.min(0.5, getEnergy(entry.getKey()));
             if (consumed <= craftedEnergy) {
-                if (getItemHandler().getItem(0).isEmpty()) {
-                    consumed += energyToConsume;
-                    removeEnergy(entry.getKey(), energyToConsume);
-                    System.out.print(" Процесс наполнения " + entry.getKey().name().toUpperCase() + ": " + consumed + " из " + craftedEnergy);
-                    return false;
-                } else {
-                    canCraft = false;
-                    consumed = 0;
-                    level.playSound(null, getBlockPos(), SoundEvents.AMBIENT_CAVE, SoundSource.BLOCKS, 1.0f, 1.0f);
-                    return false;
-                }
+                consumed += energyToConsume;
+                removeEnergy(entry.getKey(), energyToConsume);
+
+                System.out.print(" Процесс наполнения " + entry.getKey().name().toUpperCase() + ": " + consumed + " из " + craftedEnergy);
+                craftedMap.put(entry.getKey(), craftedMap.getOrDefault(entry.getKey(), 0.0) + consumed);
+                return false;
             }
-            craftedMap.put(entry.getKey(), craftedMap.getOrDefault(entry.getKey(), 0.0) + consumed);
         }
         return true;
     }
