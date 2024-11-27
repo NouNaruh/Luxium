@@ -2,7 +2,7 @@ package com.easynull.luxium.init.items;
 
 import com.easynull.luxium.api.energies.EnergyType;
 import com.easynull.luxium.init.tiles.TileFillingPrism;
-import com.easynull.luxium.init.tiles.TileLuxiumCrystal;
+import com.easynull.luxium.init.tiles.TileLuxiumPulsar;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
@@ -24,7 +24,7 @@ public class Tester extends Item {
         BlockPos pos = pContext.getClickedPos();
         Level world = pContext.getLevel();
         BlockEntity l = world.getBlockEntity(pos);
-        if(l instanceof TileLuxiumCrystal crystal) {
+        if(l instanceof TileLuxiumPulsar crystal) {
             pl.sendMessage(new TextComponent(crystal.getLux() + ""), Util.NIL_UUID);
         }
         if(l instanceof TileFillingPrism prism) {

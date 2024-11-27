@@ -2,32 +2,30 @@ package com.easynull.luxium.init.tiles;
 
 import com.easynull.luxium.api.energies.EnergyType;
 import com.easynull.luxium.api.energies.IEnergyBlock;
+import com.easynull.luxium.client.utils.ClientUtil;
 import com.easynull.luxium.init.ModInit;
 import com.easynull.luxium.init.recipes.RecipePrism;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class TileFillingPrism extends TileHideInventory implements IEnergyBlock {
-    double lux, tenebris, consumed;
-    private final Map<EnergyType, Double> craftedMap;
+    double lux, tenebris = 1000, cons;
+    final Map<EnergyType, Double> craftedMap;
     public boolean canCraft;
 
     public TileFillingPrism(BlockPos pos, BlockState state) {
         super(ModInit.prism.get(), pos, state);
-        this.lux = 3000;
-        this.tenebris = 3000;
-        this.craftedMap = new HashMap<>();
+        this.lux = 10;
+        this.craftedMap = new LinkedHashMap<>();
     }
     @Override
     public double getEnergy(EnergyType type){
@@ -58,7 +56,7 @@ public class TileFillingPrism extends TileHideInventory implements IEnergyBlock 
         }
     }
     @Override
-    protected SimpleContainer createItemHandler() {
+    protected SimpleContainer createInv() {
         return new SimpleContainer(1){
             @Override
             public int getMaxStackSize() {
@@ -71,43 +69,44 @@ public class TileFillingPrism extends TileHideInventory implements IEnergyBlock 
         if (!level.isClientSide() && recipe.isPresent() && tile.canCraft) {
             if (tile.allConsumeEnergy(recipe.get())) {
                 tile.craftItem(pos, recipe.get());
-                tile.consumed = 0;
                 tile.canCraft = false;
             } else {
-                level.playSound(null, pos, SoundEvents.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, SoundSource.BLOCKS, 1.0f, 1.0f);
+                level.playSound(null, pos, SoundEvents.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, SoundSource.BLOCKS, 4.0f, 1.0f);
             }
         }
     }
     private boolean allConsumeEnergy(RecipePrism recipe) {
         for (Map.Entry<EnergyType, Double> entry : recipe.getEnergyMap().entrySet()) {
-            if(!craftedMap.containsKey(entry.getKey())) {
-                consumed = craftedMap.getOrDefault(entry.getKey(), 0.0);
-            }
-            double craftedEnergy = craftedMap.getOrDefault(entry.getKey(), entry.getValue());
+            double craftedEnergy = entry.getValue();
             double energyToConsume = Math.min(0.5, getEnergy(entry.getKey()));
-            if (consumed <= craftedEnergy) {
-                consumed += energyToConsume;
+            cons = craftedMap.getOrDefault(entry.getKey(), craftedMap.getOrDefault(entry.getKey(), 0.0) + cons);
+
+            if (cons <= craftedEnergy) {
+                cons += energyToConsume;
+                craftedMap.put(entry.getKey(), cons);
                 removeEnergy(entry.getKey(), energyToConsume);
 
-                System.out.print(" Процесс наполнения " + entry.getKey().name().toUpperCase() + ": " + consumed + " из " + craftedEnergy);
-                craftedMap.put(entry.getKey(), craftedMap.getOrDefault(entry.getKey(), 0.0) + consumed);
+                System.out.print(" Процесс наполнения " + entry.getKey().name().toUpperCase() + ": " + cons + " из " + craftedEnergy);
                 return false;
+            } else {
+                cons = 0;
             }
         }
+        craftedMap.clear();
         return true;
     }
     private void craftItem(BlockPos pos, RecipePrism recipe) {
         ItemStack stack = recipe.getResultItem();
-        getItemHandler().setItem(0, stack);
+        getInv().setItem(0, stack);
         level.playSound(null, pos, SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
     private Optional<RecipePrism> getRecipe() {
-        return getLevel().getRecipeManager().getRecipeFor(RecipePrism.Type.INSTANCE, (SimpleContainer)getItemHandler(), level);
+        return getLevel().getRecipeManager().getRecipeFor(RecipePrism.Type.INSTANCE, (SimpleContainer)getInv(), level);
     }
     @Override
     public void readNBT(CompoundTag tag) {
         super.readNBT(tag);
-        consumed = tag.getDouble("consumed");
+        cons = tag.getDouble("consumed");
         canCraft = tag.getBoolean("canCraft");
         lux = tag.getDouble(EnergyType.lux.name());
         tenebris = tag.getDouble(EnergyType.tenebris.name());
@@ -116,7 +115,7 @@ public class TileFillingPrism extends TileHideInventory implements IEnergyBlock 
     @Override
     public void writeNBT(CompoundTag tag) {
         super.writeNBT(tag);
-        tag.putDouble("consumed", consumed);
+        tag.putDouble("consumed", cons);
         tag.putBoolean("canCraft", canCraft);
         tag.putDouble(EnergyType.lux.name(), lux);
         tag.putDouble(EnergyType.tenebris.name(), tenebris);

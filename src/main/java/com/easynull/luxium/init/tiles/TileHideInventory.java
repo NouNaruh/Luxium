@@ -9,12 +9,11 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class TileHideInventory extends TileMod implements Clearable {
-    public final SimpleContainer itemHandler = createItemHandler();
+    public final SimpleContainer itemHandler = createInv();
     public TileHideInventory(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
         itemHandler.addListener(i -> setChanged());
@@ -50,16 +49,16 @@ public abstract class TileHideInventory extends TileMod implements Clearable {
 
     @Override
     public void clearContent() {
-        getItemHandler().clearContent();
+        getInv().clearContent();
     }
 
     public final int inventorySize() {
-        return getItemHandler().getContainerSize();
+        return getInv().getContainerSize();
     }
 
-    protected abstract SimpleContainer createItemHandler();
+    protected abstract SimpleContainer createInv();
 
-    public final Container getItemHandler() {
+    public final Container getInv() {
         return itemHandler;
     }
 }

@@ -68,7 +68,7 @@ public class BlockFillingPrism extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player player, InteractionHand hand, BlockHitResult pHit) {
         TileFillingPrism prism = (TileFillingPrism) pLevel.getBlockEntity(pPos);
         ItemStack stack = player.getItemInHand(hand).copy();
-        Container conPrism = prism.getItemHandler();
+        Container conPrism = prism.getInv();
 
         if(!stack.isEmpty() && conPrism.getItem(0).isEmpty()) {
             if (stack.getCount() > 1) {
@@ -94,7 +94,7 @@ public class BlockFillingPrism extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             TileFillingPrism prism = (TileFillingPrism) pLevel.getBlockEntity(pPos);
-            ItemStack stack = prism.getItemHandler().getItem(0);
+            ItemStack stack = prism.getInv().getItem(0);
             Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY() + 0.8, pPos.getZ(), stack);
             super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
         }

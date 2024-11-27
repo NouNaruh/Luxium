@@ -55,4 +55,13 @@ public abstract class TileMod extends BlockEntity {
             ClientUtil.updateTilePacket(this);
         }
     }
+    public int pX(){
+        return getBlockPos().getX();
+    }
+    public int pY(){
+        return getBlockPos().getY();
+    }
+    public int pZ(){
+        return getBlockPos().getZ();
+    }
 }

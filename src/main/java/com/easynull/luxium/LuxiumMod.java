@@ -2,7 +2,7 @@ package com.easynull.luxium;
 
 import com.easynull.luxium.api.chronicles.Head;
 import com.easynull.luxium.client.render.tile.RenderFillingPrism;
-import com.easynull.luxium.client.render.tile.RenderLuxiumCrystal;
+import com.easynull.luxium.client.render.tile.RenderLuxiumPulsar;
 import com.easynull.luxium.client.utils.ClientUtil;
 import com.easynull.luxium.init.ModInit;
 import com.mojang.logging.LogUtils;
@@ -42,10 +42,10 @@ public class LuxiumMod {
         forgeBus.addListener(ClientUtil::clientTick);
         Head.init();
         event.enqueueWork(() -> {
-            BlockEntityRenderers.register(ModInit.crystal.get(), (r) -> new RenderLuxiumCrystal());
+            BlockEntityRenderers.register(ModInit.pulsar.get(), (r) -> new RenderLuxiumPulsar());
             BlockEntityRenderers.register(ModInit.prism.get(), (r) -> new RenderFillingPrism());
         });
-        ItemBlockRenderTypes.setRenderLayer(ModInit.luxiumCrystal.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModInit.luxiumPulsar.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModInit.fillingPrism.get(), RenderType.cutout());
     }
 

@@ -1,5 +1,6 @@
 package com.easynull.luxium.client.render.tile;
 
+import com.easynull.luxium.LuxiumMod;
 import com.easynull.luxium.client.render.LuxiumRender;
 import com.easynull.luxium.client.utils.ClientUtil;
 import com.easynull.luxium.init.tiles.TileFillingPrism;
@@ -14,6 +15,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class RenderFillingPrism extends LuxiumRender<TileFillingPrism> {
@@ -23,25 +26,20 @@ public class RenderFillingPrism extends LuxiumRender<TileFillingPrism> {
     public void render(TileFillingPrism prism, float partialTicks, PoseStack ps, MultiBufferSource source, int light, int overlay) {
         double ticksUp = (ClientUtil.ticksInGame + partialTicks) * 4;
         ticksUp = ((ticksUp) % 360);
-        ItemStack stack = prism.getItemHandler().getItem(0);
+        ItemStack stack = prism.getInv().getItem(0);
         if(!stack.isEmpty()){
             ps.pushPose();
             ps.translate(0.5F, 1.4F + (float)(Math.sin(Math.toRadians(ticksUp)) * 0.43125F), 0.5F);
             ps.scale(0.9F, 0.9F, 0.9F);
             ps.mulPose(Vector3f.YN.rotation((float)ticksUp * 0.0360F));
             ps.mulPose(Vector3f.XP.rotation((float)ticksUp * 0.0360F));
-            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED, LightTexture.FULL_SKY, OverlayTexture.NO_OVERLAY, ps, source, 0);
-            ps.popPose();
-
-            ps.pushPose();
-            VertexConsumer vertex = source.getBuffer(RenderType.lightning());
-            Matrix4f matrix = ps.last().pose();
-            int alpha = (int)(255.0F * (1.0F - Math.min(ticksUp > 0.8F ? (ticksUp - 0.8F) / 0.2F : 0.0F, 1.0F)));
-            vertex01(vertex, matrix, 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.GROUND, light, overlay, ps, source, 0);
             ps.popPose();
         }
-    }
-    private static void vertex01(VertexConsumer ver, Matrix4f matrix, int alpha) {
-        ver.vertex(matrix, 0.0F, 0.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
+        ps.pushPose();
+        ps.translate(0.5F, 0F, 0.5F);
+        ps.scale(4.0F, 4.0F, 4.0F);
+        renderModel(new ModelResourceLocation(new ResourceLocation(LuxiumMod.ID, "filling_prism"), ""), ItemTransforms.TransformType.GROUND, false, ps, source, light, overlay);
+        ps.popPose();
     }
 }
